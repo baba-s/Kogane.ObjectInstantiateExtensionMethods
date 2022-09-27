@@ -38,49 +38,78 @@ namespace Kogane
             );
         }
 
-        public static T Instantiate<T>
+        public static T Instantiate<T, TParent>
         (
             this T     self,
             Vector3    position,
             Quaternion rotation,
-            Transform  parent
-        ) where T : Object
+            TParent    parent
+        ) where T : Object where TParent : Component
         {
             return Object.Instantiate
             (
                 original: self,
                 position: position,
                 rotation: rotation,
-                parent: parent
+                parent: parent.transform
             );
         }
 
-        public static T Instantiate<T>
+        public static T Instantiate<T, TParent>
         (
-            this T    self,
-            Transform parent
-        ) where T : Object
+            this T  self,
+            TParent parent
+        ) where T : Object where TParent : Component
         {
             return Object.Instantiate
             (
                 original: self,
-                parent: parent
+                parent: parent.transform
             );
         }
 
-        public static T Instantiate<T>
+        public static T Instantiate<T, TParent>
         (
-            this T    self,
-            Transform parent,
-            bool      worldPositionStays
-        ) where T : Object
+            this T  self,
+            TParent parent,
+            bool    worldPositionStays
+        ) where T : Object where TParent : Component
         {
             return Object.Instantiate
             (
                 original: self,
-                parent: parent,
+                parent: parent.transform,
                 worldPositionStays: worldPositionStays
             );
+        }
+
+        public static T[] Instantiates<T>( this T self, int count ) where T : Object
+        {
+            var array = new T[ count ];
+
+            for ( var i = 0; i < count; i++ )
+            {
+                array[ i ] = Object.Instantiate( self );
+            }
+
+            return array;
+        }
+
+        public static T[] Instantiates<T, TParent>
+        (
+            this T  self,
+            int     count,
+            TParent parent
+        ) where T : Object where TParent : Component
+        {
+            var array = new T[ count ];
+
+            for ( var i = 0; i < count; i++ )
+            {
+                array[ i ] = Object.Instantiate( self, parent.transform );
+            }
+
+            return array;
         }
     }
 }
