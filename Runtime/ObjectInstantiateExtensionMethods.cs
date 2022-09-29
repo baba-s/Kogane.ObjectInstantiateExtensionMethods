@@ -55,11 +55,41 @@ namespace Kogane
             );
         }
 
+        public static T Instantiate<T>
+        (
+            this T     self,
+            Vector3    position,
+            Quaternion rotation,
+            GameObject parent
+        ) where T : Object
+        {
+            return Object.Instantiate
+            (
+                original: self,
+                position: position,
+                rotation: rotation,
+                parent: parent.transform
+            );
+        }
+
         public static T Instantiate<T, TParent>
         (
             this T  self,
             TParent parent
         ) where T : Object where TParent : Component
+        {
+            return Object.Instantiate
+            (
+                original: self,
+                parent: parent.transform
+            );
+        }
+
+        public static T Instantiate<T>
+        (
+            this T     self,
+            GameObject parent
+        ) where T : Object
         {
             return Object.Instantiate
             (
@@ -74,6 +104,21 @@ namespace Kogane
             TParent parent,
             bool    worldPositionStays
         ) where T : Object where TParent : Component
+        {
+            return Object.Instantiate
+            (
+                original: self,
+                parent: parent.transform,
+                worldPositionStays: worldPositionStays
+            );
+        }
+
+        public static T Instantiate<T>
+        (
+            this T     self,
+            GameObject parent,
+            bool       worldPositionStays
+        ) where T : Object
         {
             return Object.Instantiate
             (
@@ -101,6 +146,23 @@ namespace Kogane
             int     count,
             TParent parent
         ) where T : Object where TParent : Component
+        {
+            var array = new T[ count ];
+
+            for ( var i = 0; i < count; i++ )
+            {
+                array[ i ] = Object.Instantiate( self, parent.transform );
+            }
+
+            return array;
+        }
+
+        public static T[] Instantiates<T>
+        (
+            this T     self,
+            int        count,
+            GameObject parent
+        ) where T : Object
         {
             var array = new T[ count ];
 
