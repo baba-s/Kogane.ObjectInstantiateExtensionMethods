@@ -140,6 +140,31 @@ namespace Kogane
             return array;
         }
 
+        public static GameObject[] InstantiatesFromSceneObject
+        (
+            this GameObject self,
+            int             count
+        )
+        {
+            self.SetActive( true );
+            var result = self.Instantiates( count );
+            self.SetActive( false );
+            return result;
+        }
+
+        public static T[] InstantiatesFromSceneObject<T>
+        (
+            this T self,
+            int    count
+        ) where T : Component
+        {
+            var gameObject = self.gameObject;
+            gameObject.SetActive( true );
+            var result = self.Instantiates( count );
+            gameObject.SetActive( false );
+            return result;
+        }
+
         public static T[] Instantiates<T, TParent>
         (
             this T  self,
@@ -157,6 +182,33 @@ namespace Kogane
             return array;
         }
 
+        public static GameObject[] InstantiatesFromSceneObject<TParent>
+        (
+            this GameObject self,
+            int             count,
+            TParent         parent
+        ) where TParent : Component
+        {
+            self.SetActive( true );
+            var result = self.Instantiates( count, parent );
+            self.SetActive( false );
+            return result;
+        }
+
+        public static T[] InstantiatesFromSceneObject<T, TParent>
+        (
+            this T  self,
+            int     count,
+            TParent parent
+        ) where T : Component where TParent : Component
+        {
+            var gameObject = self.gameObject;
+            gameObject.SetActive( true );
+            var result = self.Instantiates( count, parent );
+            gameObject.SetActive( false );
+            return result;
+        }
+
         public static T[] Instantiates<T>
         (
             this T     self,
@@ -172,6 +224,33 @@ namespace Kogane
             }
 
             return array;
+        }
+
+        public static GameObject[] InstantiatesFromSceneObject<T>
+        (
+            this GameObject self,
+            int             count,
+            GameObject      parent
+        )
+        {
+            self.SetActive( true );
+            var result = self.Instantiates( count, parent );
+            self.SetActive( false );
+            return result;
+        }
+
+        public static T[] InstantiatesFromSceneObject<T>
+        (
+            this T     self,
+            int        count,
+            GameObject parent
+        ) where T : Component
+        {
+            var gameObject = self.gameObject;
+            gameObject.SetActive( true );
+            var result = self.Instantiates( count, parent );
+            gameObject.SetActive( false );
+            return result;
         }
     }
 }
