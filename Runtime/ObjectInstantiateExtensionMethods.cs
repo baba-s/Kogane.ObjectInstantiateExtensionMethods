@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Kogane
 {
@@ -182,6 +183,23 @@ namespace Kogane
             return array;
         }
 
+        public static T[] Instantiates<T, TParent>
+        (
+            this T                 self,
+            int                    count,
+            IReadOnlyList<TParent> parentArray
+        ) where T : Object where TParent : Component
+        {
+            var array = new T[ count ];
+
+            for ( var i = 0; i < count; i++ )
+            {
+                array[ i ] = Object.Instantiate( self, parentArray[ i ].transform );
+            }
+
+            return array;
+        }
+
         public static GameObject[] InstantiatesFromSceneObject<TParent>
         (
             this GameObject self,
@@ -205,6 +223,20 @@ namespace Kogane
             var gameObject = self.gameObject;
             gameObject.SetActive( true );
             var result = self.Instantiates( count, parent );
+            gameObject.SetActive( false );
+            return result;
+        }
+
+        public static T[] InstantiatesFromSceneObject<T, TParent>
+        (
+            this T                 self,
+            int                    count,
+            IReadOnlyList<TParent> parentArray
+        ) where T : Component where TParent : Component
+        {
+            var gameObject = self.gameObject;
+            gameObject.SetActive( true );
+            var result = self.Instantiates( count, parentArray );
             gameObject.SetActive( false );
             return result;
         }
