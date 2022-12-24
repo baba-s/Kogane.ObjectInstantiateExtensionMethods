@@ -148,8 +148,17 @@ namespace Kogane
         )
         {
             self.SetActive( true );
-            var result = self.Instantiates( count );
+            var result = self.Instantiates( count, self.transform.parent );
             self.SetActive( false );
+            return result;
+        }
+
+        public static T InstantiateFromSceneObject<T>( this T self ) where T : Component
+        {
+            var gameObject = self.gameObject;
+            gameObject.SetActive( true );
+            var result = self.Instantiate( self.transform.parent );
+            gameObject.SetActive( false );
             return result;
         }
 
@@ -161,7 +170,7 @@ namespace Kogane
         {
             var gameObject = self.gameObject;
             gameObject.SetActive( true );
-            var result = self.Instantiates( count );
+            var result = self.Instantiates( count, self.transform.parent );
             gameObject.SetActive( false );
             return result;
         }
