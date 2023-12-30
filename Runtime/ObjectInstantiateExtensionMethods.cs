@@ -162,6 +162,33 @@ namespace Kogane
             return result;
         }
 
+        public static T InstantiateFromSceneObject<T>
+        (
+            this T  self,
+            Vector3 position
+        ) where T : Component
+        {
+            var gameObject = self.gameObject;
+            gameObject.SetActive( true );
+            var result = self.Instantiate( position, Quaternion.identity, self.transform.parent );
+            gameObject.SetActive( false );
+            return result;
+        }
+
+        public static T InstantiateFromSceneObject<T>
+        (
+            this T     self,
+            Vector3    position,
+            Quaternion rotation
+        ) where T : Component
+        {
+            var gameObject = self.gameObject;
+            gameObject.SetActive( true );
+            var result = self.Instantiate( position, rotation, self.transform.parent );
+            gameObject.SetActive( false );
+            return result;
+        }
+
         public static T[] InstantiatesFromSceneObject<T>
         (
             this T self,
